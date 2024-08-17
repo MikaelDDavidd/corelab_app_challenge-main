@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "746142083219",
+    "project_id": "correlab-challenge",
+    "storage_bucket": "correlab-challenge.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:746142083219:android:9e4a2ebb7cc70d21590566",
+        "android_client_info": {
+          "package_name": "com.example.corelab_app_challenge"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCiN3IUpvgjuBzz1U43yKXCsKHZnTGMu64"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
