@@ -1,64 +1,128 @@
-CoreLab App Challenge
+<div align="center">
 
-Este repositório contém o projeto desenvolvido para o desafio da CoreLab. O aplicativo foi construído usando Flutter e segue as diretrizes de design e funcionalidades especificadas no desafio.
+# CoreLab App Challenge
 
-Funcionalidades Implementadas
+**Flutter marketplace UI built for the CoreLab technical recruitment challenge.**
 
-1. Navegação e Estrutura de Telas
+A responsive product browsing app with search, categories, and favorites — fetching listings from Firebase Realtime Database and rendering them with a clean, tablet-aware layout.
 
-	•	NavigationView: Tela principal que gerencia a navegação entre as diferentes views do aplicativo (Home, Categorias, Anunciar, Favoritos, Conta).
-	•	HomeView: Exibe os últimos anúncios categorizados por data de adição (Hoje, Ontem, Todos).
-	•	CategoriesView: Exibe uma lista de categorias com estilização específica e layout responsivo.
-	•	SearchResultsView: Tela que exibe os resultados da pesquisa e gerencia o estado de “Nenhum resultado encontrado”.
-	•	ProfileView: Tela de perfil (a ser customizada conforme necessário).
+[![Flutter](https://img.shields.io/badge/Flutter-3.x-02569B?logo=flutter)](https://flutter.dev)
+[![Dart](https://img.shields.io/badge/Dart-3.0+-0175C2?logo=dart)](https://dart.dev)
+[![Firebase](https://img.shields.io/badge/Firebase-RTDB-FFCA28?logo=firebase)](https://firebase.google.com)
+[![Platform](https://img.shields.io/badge/Platform-iOS%20%7C%20Android%20%7C%20Web-lightgrey)]()
+[![Status](https://img.shields.io/badge/Status-Challenge%20Submission-blue)]()
 
-2. Lógica de Pesquisa
+</div>
 
-	•	Implementação de uma lógica de pesquisa na SearchLogicController que filtra produtos com base no termo de pesquisa e atualiza a interface do usuário em tempo real.
-	•	Armazenamento e exibição de histórico de pesquisas, com possibilidade de pesquisa diretamente a partir do histórico.
+---
 
-3. Categorias
+## Overview
 
-	•	Criação de uma tela de categorias com uma lista de itens estilizados.
-	•	Alteração dinâmica da barra de navegação para exibir o título “Categorias” ao selecionar a aba de categorias.
+This repository contains my submission for the **CoreLab Flutter technical challenge**, part of the company's recruitment process. The app reproduces a marketplace-style mobile experience — five-tab navigation, real-time product search, category browsing, and a responsive layout that adapts to phones and tablets in both orientations.
 
-4. Gerenciamento de Estado
+The codebase prioritizes a clean separation between presentation, controllers, and data, and uses `Provider` to keep the UI in sync with state changes. Data is fetched from a hosted Firebase Realtime Database via a thin HTTP client wrapper.
 
-	•	Uso do Provider para gerenciamento de estado nas diferentes telas e controladores, garantindo que a interface do usuário seja atualizada conforme as mudanças nos dados.
+### Key Features
 
-5. Layout Responsivo
+- **Bottom Navigation** — Five tabs (Home, Categories, Announce, Favorites, Account) wired through an `IndexedStack` to preserve tab state
+- **Live Search** — Filters products as the user types, with explicit empty / no-result states
+- **Search History** — Persists previous queries via `shared_preferences` and lets the user re-run them from a suggestions panel
+- **Categorized Home** — Latest listings grouped by recency (Today, Yesterday, All)
+- **Categories Grid** — Dynamic AppBar that swaps title and styling when the categories tab is selected
+- **Responsive Layout** — Uses `MediaQuery` and `responsive_builder` to adjust paddings, AppBar height, and grid widths for phones, tablets, portrait, and landscape
+- **Firebase-Backed Catalog** — Products loaded from Firebase Realtime Database through a swappable repository interface
 
-	•	Implementação de layout responsivo para suportar diferentes tamanhos de tela e orientações (tablets e smartphones).
+## Tech Stack
 
-6. Exibição de Resultados
+- **Framework**: Flutter (Dart SDK >= 3.0.5)
+- **State Management**: [`provider`](https://pub.dev/packages/provider) ^6.1.2
+- **HTTP**: [`http`](https://pub.dev/packages/http) ^1.2.2
+- **Local Storage**: [`shared_preferences`](https://pub.dev/packages/shared_preferences) ^2.0.13 (search history)
+- **Responsive UI**: [`responsive_builder`](https://pub.dev/packages/responsive_builder) ^0.7.1
+- **Logging**: [`logger`](https://pub.dev/packages/logger) ^2.4.0
+- **Backend**: Firebase Realtime Database (REST endpoint)
 
-	•	A tela de resultados de pesquisa (SearchResultsView) exibe uma lista de produtos encontrados ou uma mensagem amigável caso nenhum resultado seja encontrado.
+## Getting Started
 
-7. Testes
+### Prerequisites
 
-	•	Adicionados testes para verificar o funcionamento das principais funcionalidades do aplicativo, incluindo navegação, lógica de pesquisa e exibição de categorias.
+- Flutter SDK 3.x ([install](https://docs.flutter.dev/get-started/install))
+- Dart SDK 3.0.5 or newer
+- An iOS Simulator, Android Emulator, or connected device
 
-Estrutura do Projeto
+### Installation
 
-	•	controllers/: Contém os controladores de lógica, como HomeController e SearchLogicController.
-	•	views/: Contém as diferentes telas do aplicativo.
-	•	widgets/: Contém widgets reutilizáveis, como listas personalizadas e indicadores de progresso.
-	•	data/: Contém utilitários e classes para comunicação com APIs e repositórios de dados.
-
-Como Executar o Projeto
-
-	1.	Clone este repositório.
-	2.	Certifique-se de que o Flutter está instalado em sua máquina.
-	3.	No terminal, navegue até a pasta do projeto e execute o comando flutter pub get para instalar as dependências.
-	4.	Execute flutter run para iniciar o aplicativo em um emulador ou dispositivo conectado.
-
-Testes
-
-Para rodar os testes, execute o comando:
 ```bash
-flutter run
+# Clone the repository
+git clone https://gitlab.com/mikaeldavidlopes/corelab_app_challenge.git
+cd corelab_app_challenge
+
+# Install dependencies
+flutter pub get
 ```
 
-Considerações Finais
+### Running
 
-Este projeto foi desenvolvido com foco em uma arquitetura limpa, mantendo as funcionalidades desacopladas e utilizando práticas recomendadas de Flutter. A lógica de pesquisa e navegação foi implementada para garantir uma experiência de usuário fluida e eficiente.
+```bash
+# Run on the default connected device
+flutter run
+
+# Or pick a target
+flutter run -d chrome
+flutter run -d ios
+flutter run -d android
+```
+
+### Testing
+
+```bash
+flutter test
+```
+
+## Architecture
+
+The project follows a lightweight layered structure: views render UI, controllers hold state and business logic, and the data layer talks to Firebase through a repository abstraction.
+
+```
+UI (views)  →  Controller (Provider)  →  Repository  →  HttpClient  →  Firebase RTDB
+```
+
+Controllers extend `ChangeNotifier`; views read them via `Provider.of` / `Consumer`. The `iProducts` interface lets the data source be swapped (e.g., for a mock in tests) without touching the UI.
+
+## Project Structure
+
+```
+lib/
+├── main.dart                         # App entrypoint, MultiProvider setup
+└── app/
+    ├── modules/
+    │   ├── controllers/              # HomeController, SearchLogicController
+    │   └── views/                    # Navigation, Home, Categories, Search, Favorites, Profile, Announce
+    ├── widgets/                      # Reusable widgets (product cards, lists, suggestions, loaders)
+    └── data/
+        ├── models/                   # Product model
+        ├── stores/                   # Local product store
+        ├── utilities/                # App colors / shared utils
+        └── firebase/
+            ├── http/                 # IHttpClient + custom exceptions
+            └── repositories/         # ProductsRepository (iProducts impl)
+assets/
+└── images/                           # Empty-state and UI assets
+test/                                 # Widget and unit tests
+```
+
+## Notes on the Challenge
+
+- Implemented from the design and feature spec provided by CoreLab during the recruitment process.
+- The Firebase endpoint is a public test database created specifically for this challenge.
+- Focus areas: UI fidelity, responsive behavior across form factors, search UX (live filtering + history), and clean separation between layers.
+
+## License
+
+Personal challenge submission — no license. All rights reserved.
+
+---
+
+<div align="center">
+Built by <a href="https://github.com/MikaelDDavidd">Mikael David</a>
+</div>
